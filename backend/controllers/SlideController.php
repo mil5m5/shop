@@ -9,27 +9,14 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use backend\controllers\AdminController;
+
 
 /**
  * SlideController implements the CRUD actions for Slide model.
  */
-class SlideController extends Controller
+class SlideController extends AdminController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Slide models.
      * @return mixed

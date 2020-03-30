@@ -1,3 +1,11 @@
+<?php
+/* @var $slides frontend\controllers\SiteController */
+/* @var $topProducts frontend\controllers\SiteController */
+/* @var $products frontend\controllers\SiteController */
+?>
+
+
+
 <!--slide-->
 <?= $this->render('slide', compact('slides'));?>
 <!--end slide-->

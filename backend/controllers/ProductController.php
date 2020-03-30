@@ -12,36 +12,14 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use backend\controllers\AdminController;
+
 
 /**
  * ProductController implements the CRUD actions for Product model.
  */
-class ProductController extends Controller
+class ProductController extends AdminController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Product models.
      * @return mixed
@@ -78,12 +56,12 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-        $product_category = new ProductCategory();
+        $productCategory = new ProductCategory();
         $categories = Category::getCategory()->select(['name', 'id'])->indexBy('id')->column();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $product_category->product_id = $model->id;
-            $product_category->category_id = $model->category;
-            $product_category->save();
+            $productCategory->product_id = $model->id;
+            $productCategory->category_id = $model->category;
+            $productCategory->save();
             if($model->image = UploadedFile::getInstance($model, 'imageFile')) {
                 $model->image->saveAs('@frontend/web/uploads/products/' . $model->image->baseName . '.' . $model->image->extension);
                 $model->save();

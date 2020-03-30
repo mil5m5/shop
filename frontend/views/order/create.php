@@ -1,5 +1,9 @@
-<?php use yii\helpers\Html;
+<?php
+use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+
+/* @var $model frontend\controllers\OrderController */
+
 ?>
 <div class="container">
     <?php $form = ActiveForm::begin();?>

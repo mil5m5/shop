@@ -1,5 +1,8 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
+/* @var $topProducts frontend\controllers\SiteController */
+
 ?>
 <section class="ftco-section bg-light">
     <div class="container">
@@ -12,7 +15,7 @@ use yii\helpers\Html;
     </div>
     <div class="container">
         <div class="row">
-            <?= $this->render('_product-list', ['products' => $topProducts])?>
+            <?= $this->render('_limited-list-products', ['products' => $topProducts]);?>
         </div>
     </div>
 </section>

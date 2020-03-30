@@ -1,13 +1,16 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ListView;
+
+/* @var $dataProvider frontend\controllers\ProductController */
 
 ?>
 <div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Products</span></p>
+                <p class="breadcrumbs"><span class="mr-2"><a href="../../../backend/web/index.php">Home</a></span> <span>Products</span></p>
                 <h1 class="mb-0 bread">Collection Products</h1>
             </div>
         </div>
@@ -19,7 +22,13 @@ use yii\helpers\Url;
         <div class="row">
             <div class="col-md-8 col-lg-10 order-md-last">
                 <div class="row">
-                    <?= $this->render('_product-list', ['products' => $products])?>
+                    <?= ListView::widget([
+                        'dataProvider' => $dataProvider,
+                        'itemView' => '_product-list',
+                        'itemOptions' => [
+                            'tag' => 'div',
+                        ],
+                    ]);?>
                 </div>
             </div>
 

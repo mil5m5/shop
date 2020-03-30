@@ -1,5 +1,6 @@
 <?php
 namespace frontend\controllers;
+
 use common\models\Order;
 use common\models\OrderProduct;
 use common\models\Product;
@@ -10,24 +11,24 @@ class OrderController extends Controller
 {
     public function actionCreate()
     {
+        $total = 0;
         $session = Yii::$app->session;
         $cookies = Yii::$app->response->cookies;
-        if ($total = $session->get('total')) {
+        if ($favorites = Yii::$app->request->cookies->getValue('favorite')) {
             $model = new Order();
-            $favorites = Yii::$app->request->cookies->getValue('favorite');
             if ($model->load(Yii::$app->request->post())) {
                 $model->status = 0;
-                $model->total = $total;
+                $model->total = $session->get('cartTotal');;
                 if ($model->save()) {
                     foreach ($favorites as $key => $value) {
                         $post = Product::findOne($key);
                         $post->updateCounters(['sold' => 1]);
-                        $order_products = new OrderProduct();
-                        $order_products->order_id = $model->id;
-                        $order_products->product_id = $key;
-                        $order_products->quantity = $value;
-                        if( $order_products->save()) {
-                            $session->remove('total');
+                        $orderProducts = new OrderProduct();
+                        $orderProducts->order_id = $model->id;
+                        $orderProducts->product_id = $key;
+                        $orderProducts->quantity = $value;
+                        if( $orderProducts->save()) {
+                            $session->remove('cartTotal');
                             $cookies->remove('favorite');
                         }
                         return $this->redirect('/site/index/');

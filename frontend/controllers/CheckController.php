@@ -8,9 +8,8 @@ class CheckController extends Controller
 {
     public function actionCookie()
     {
-        $id = \Yii::$app->request->post('id');
-        $favorites = \Yii::$app->request->cookies->getValue('favorite');
-        print_r($favorites);
+        $id = Yii::$app->request->post('id');
+        $favorites = Yii::$app->request->cookies->getValue('favorite');
         if (!is_array($favorites)) {
             $favorites = [];
         }
@@ -28,18 +27,18 @@ class CheckController extends Controller
 
     public function actionQuant($id, $quantity)
     {
-        $quant = \Yii::$app->request->cookies->getValue('favorite');
+        $quant = Yii::$app->request->cookies->getValue('favorite');
         if (!is_array($quant)) {
             $quant = [];
         }
         $quant[$id] = $quantity;
 
-        print_r(\Yii::$app->request->cookies->getValue('favorite'));
+        print_r(Yii::$app->request->cookies->getValue('favorite'));
         $cookie = new Cookie([
             'name' => 'favorite',
             'value' => $quant,
         ]);
-        \Yii::$app->response->cookies->add($cookie);
+        Yii::$app->response->cookies->add($cookie);
     }
 
 }

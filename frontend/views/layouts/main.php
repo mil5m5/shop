@@ -64,7 +64,7 @@ AppAsset::register($this);
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <?php foreach (Category::getMainCategories() as $category_key => $category_value) : ?>
-                        <?= Html::a($category_value, Url::toRoute(['/site/products', 'id' => $category_key]), ['class' => 'dropdown-item'])?>
+                        <?= Html::a($category_value, Url::toRoute(['/product/products', 'id' => $category_key]), ['class' => 'dropdown-item'])?>
                         <?php endforeach; ?>
 
                     </div>
@@ -79,7 +79,7 @@ AppAsset::register($this);
                     $countCart = 0;
                 }
                 ?>
-                <li class="nav-item cta cta-colored"><a href="<?= Url::toRoute(['site/favorite'])?>"href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[<?= $countCart;?>]</a></li>
+                <li class="nav-item cta cta-colored"><a href="<?= Url::toRoute(['/cart/favorite'])?>"href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[<?= $countCart;?>]</a></li>
 
             </ul>
         </div>

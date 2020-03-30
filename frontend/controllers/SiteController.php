@@ -18,6 +18,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use frontend\controllers\ProductController;
 
 /**
  * Site controller
@@ -80,34 +81,9 @@ class SiteController extends Controller
     {
         $mainCategories = Category::getMainCategories();
         $slides = Slide::find()->all();
-        $products = Product::find()->orderBy(['id' => SORT_DESC])->limit(4)->all();
-        $topProducts = Product::find()->orderBy(['sold' => SORT_DESC])->limit(4)->all();
+        $products = ProductController::getProductsLimitedQuantities(4);
+        $topProducts = ProductController::getTopProductsLimitedQuantities(4);
         return $this->render('index', compact('mainCategories', 'slides', 'products', 'topProducts'));
-    }
-
-    public function actionAssessment($assessment, $id)
-    {
-        $post = Product::findOne($id);
-        $post->updateCounters(['rating' => $assessment]);
-        $post->updateCounters(['number_of_voters' => 1]);
-        return true;
-    }
-
-    public function actionProduct($id)
-    {
-        $product = Product::findOne($id);
-        return $this->render('product', compact('product'));
-    }
-
-    public function actionProducts($id = '')
-    {
-        if($id == '') {
-            $products = Product::find()->all();
-        }else {
-            $model = Category::findOne($id);
-            $products = $model->getProducts()->all();
-        }
-        return $this->render('products', compact('products'));
     }
 
     /**
@@ -165,17 +141,6 @@ class SiteController extends Controller
             return $this->render('contact', [
                 'model' => $model,
             ]);
-        }
-    }
-
-    public function actionFavorite()
-    {
-        if($favorites = Yii::$app->request->cookies->getValue('favorite')) {
-            $favorites = array_keys($favorites);
-            $products = Product::find()->where(['in', 'id', $favorites])->all();
-            return $this->render('favorites', compact('products'));
-        }else {
-            echo 'Cart is empty!';
         }
     }
 

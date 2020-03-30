@@ -28,8 +28,6 @@ use mihaildev\ckeditor\CKEditor;
         ],
     ]);?>
 
-    <?= $form->field($model, 'quantity')->textInput() ?>
-
     <?= $form->field($model, 'available_quantity')->textInput() ?>
 
     <?= $form->field($model, 'imageFile')->fileInput()?>

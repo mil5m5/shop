@@ -23,7 +23,6 @@ $(document).ready(function(){
             success: function (answer) {
                 location.reload();
             }
-
         })
     })
 

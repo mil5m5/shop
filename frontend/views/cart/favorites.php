@@ -2,15 +2,13 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 /* @var $products frontend\controllers\SiteControllere */
-$q = \Yii::$app->request->cookies->getValue('favorite');
-$total = 0;
-$session = Yii::$app->session;
+/* @var $total frontend\controllers\SiteControllere */
 ?>
 <div class="hero-wrap hero-bread" style="background-image: url('images/bg_6.jpg');">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 ftco-animate text-center">
-                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span></p>
+                <p class="breadcrumbs"><span class="mr-2"><a href="../../../backend/web/index.php">Home</a></span> <span>Cart</span></p>
                 <h1 class="mb-0 bread">My Cart</h1>
             </div>
         </div>
@@ -34,35 +32,30 @@ $session = Yii::$app->session;
                         </thead>
                         <tbody>
                         <?php foreach ($products as $product) :?>
-                            <?php
-                            $quant = $q[$product['id']] ?? 1;
-                            $sum = $quant * $product['price'];
-                            $total = $total + $sum;
-                            $session->set('total', $total);
-                            ?>
-                            <tr class="text-center" id="<?=$product['id']?>">
+                            <tr class="text-center" id="<?=$product->id?>">
                                 <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 
-                                <td class="image-prod"><div class="img" style="background-image:url(<?= Url::to('@web/uploads/products/') . $product['image'];?>);"></div></td>
+                                <td class="image-prod"><div class="img" style="background-image:url(<?= Url::to('@web/uploads/products/') . $product->image;?>);"></div></td>
 
                                 <td class="product-name">
-                                    <h3><a href="<?= Url::toRoute(['/site/product/', 'id' => $product['id']])?>"><?= $product['title']?></a></h3>
-                                    <p><?= $product['description']?></p>
+                                    <h3><a href="<?= $product->productPage?>"><?= $product->title?></a></h3>
+                                    <p><?= $product->description?></p>
                                 </td>
-
-                                <td class="price"><?=  $product['price']?></td>
+                                <td class="price">
+                                    <span style='text-decoration: line-through; color: #adadad;' class='mr-2 price-dc'><?= $product->cost['old_price'];?></span>
+                                    <?=  $product->cost['price']?> $
+                                </td>
 
                                 <td class="quantity">
                                     <div class="input-group mb-3">
-                                        <input type="text" name="<?=$product['id']?>" data-url="<?= Url::to('check/quant/');?>" class="quantit form-control input-number" value="<?= $quant?>" min="1" max="100">
-                                        <?= Html::hiddenInput(\Yii :: $app->getRequest()->csrfParam, \Yii :: $app->getRequest()->getCsrfToken(), []); ?>
+                                        <input type="text" name="<?=$product->id?>" data-url="<?= Url::to('check/quant/');?>" class="quantit form-control input-number" value="<?= $product->quantit?>" min="1" max="100">
+                                        <?= Html::hiddenInput(Yii::$app->getRequest()->csrfParam, Yii::$app->getRequest()->getCsrfToken(), []); ?>
                                     </div>
                                 </td>
 
-                                <td class="total"><?= $quant * $product['price']?></td>
+                                <td class="total"><?= $product->sumTotal?></td>
                             </tr><!-- END TR-->
                         <?php endforeach;?>
-
                         </tbody>
                     </table>
                 </div>

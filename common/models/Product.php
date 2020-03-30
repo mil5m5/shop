@@ -68,6 +68,55 @@ class Product extends \yii\db\ActiveRecord
         return Url::to('/uploads/products/' . $this->image);
     }
 
+    public function getProductPage()
+    {
+        return Url::toRoute(['/product/product/', 'id' => $this->id]);
+    }
+
+    public function getProductAssessment()
+    {
+        return Url::toRoute('/product/assessment/');
+    }
+
+    public function getRatin()
+    {
+        if ($this->rating != 0 ) {
+            $rating = $this->rating / $this->number_of_voters;
+            return round($rating, 1);
+        } else {
+           return 0;
+        }
+
+    }
+
+    public function getCost()
+    {
+        if ($this->discount != 0 ) {
+            return ['price' => ($this->price * $this->discount) / 100, 'old_price' => $this->price];
+        } else {
+            return ['price' => $this->price,  'old_price' => ''];
+        }
+
+    }
+
+    public function getSumTotal()
+    {
+        if($favorites = Yii::$app->request->cookies->getValue('favorite')) {
+            return $favorites[$this->id] * $this->cost['price'];
+        } else {
+            return $this->price;
+        }
+    }
+
+    public function getQuantit()
+    {
+        if($favorites = Yii::$app->request->cookies->getValue('favorite')) {
+            return $favorites[$this->id];
+        } else {
+            return 1;
+        }
+    }
+
     /**
      * Gets query for [[ProductCategories]].
      *

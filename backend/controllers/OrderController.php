@@ -10,36 +10,14 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\controllers\AdminController;
+
 
 /**
  * OrderController implements the CRUD actions for Order model.
  */
-class OrderController extends Controller
+class OrderController extends AdminController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Lists all Order models.
      * @return mixed
@@ -63,15 +41,15 @@ class OrderController extends Controller
      */
     public function actionView($id)
     {
-        $products_array = [];
+        $productsArray = [];
         $model = $this->findModel($id);
         $products_id = $model->orderProducts;
         foreach($products_id as $product) {
-            $products_array[] = Product:: find()->where(['id' => $product])->one();
+            $productsArray[] = Product:: find()->where(['id' => $product])->one();
         }
         return $this->render('view', [
             'model' => $model,
-            'products' => $products_array,
+            'products' => $productsArray,
         ]);
     }
 

@@ -1,5 +1,7 @@
 <?php
 use \yii\helpers\Url;
+/* @var $slides frontend\controllers\SlideController */
+
 ?>
 
 <section id="home-section" class="hero">
