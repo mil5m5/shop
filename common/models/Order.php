@@ -31,10 +31,10 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'total'], 'integer'],
+            [['created_at', 'total', 'phone'], 'integer'],
             ['email', 'email'],
             [['status'], 'integer'],
-            [['address'], 'string', 'max' => 255],
+            [['address', 'name'], 'string', 'max' => 255],
         ];
     }
 
@@ -71,5 +71,10 @@ class Order extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::class, ['id' => 'order_id'])->via('orderProducts');
+    }
+
+    public function getOrderTime()
+    {
+        return date('d M Y', $this->created_at);
     }
 }

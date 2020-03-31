@@ -59,5 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </tr>
         <?php endforeach;?>
         </table>
+        <a href="<?= Url::toRoute(['/order/download/', 'id'=> $model->id])?>" download><button class="button button-success">Download PDF</button></a>
 
 </div>
+

@@ -28,10 +28,7 @@ class OrderController extends Controller
                         $orderProducts->product_id = $key;
                         $orderProducts->quantity = $value;
                         if( $orderProducts->save()) {
-                            $session->remove('cartTotal');
-                            $cookies->remove('favorite');
                         }
-                        return $this->redirect('/site/index/');
                     }
                 }
             }

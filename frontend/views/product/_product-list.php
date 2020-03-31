@@ -24,7 +24,7 @@ use yii\helpers\Url;
             </div>
             <p class="bottom-area d-flex px-3">
                 <a class="add_cart add-to-cart text-center py-2 mr-1" data-id="<?= $model->id?>">
-                    <?= Html::hiddenInput(Yii :: $app->getRequest()->csrfParam, Yii :: $app->getRequest()->getCsrfToken(), []); ?>
+                    <?= Html::hiddenInput(Yii::$app->getRequest()->csrfParam, Yii::$app->getRequest()->getCsrfToken(), []); ?>
                     <span>Add to cart <i class="ion-ios-add ml-1"></i></span>
                 </a>
             </p>
